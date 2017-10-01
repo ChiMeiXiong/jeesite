@@ -19,6 +19,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
+import org.apache.poi.hssf.usermodel.HSSFPatriarch;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Comment;
@@ -211,8 +213,8 @@ public class ExportExcel {
 			String[] ss = StringUtils.split(headerList.get(i), "**", 2);
 			if (ss.length==2){
 				cell.setCellValue(ss[0]);
-				Comment comment = this.sheet.createDrawingPatriarch().createCellComment(
-						new XSSFClientAnchor(0, 0, 0, 0, (short) 3, 3, (short) 5, 6));
+				HSSFPatriarch patr = (HSSFPatriarch) sheet.createDrawingPatriarch();
+				Comment comment = patr.createComment(new HSSFClientAnchor(0, 0, 0, 0, (short) 3, 3, (short) 5, 6));
 				comment.setString(new XSSFRichTextString(ss[1]));
 				cell.setCellComment(comment);
 			}else{
